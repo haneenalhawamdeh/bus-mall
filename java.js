@@ -1,3 +1,4 @@
+
 'use strict';
 function Bus(title, src) {
     this.title = title;
@@ -86,17 +87,17 @@ function renderNewBus() {
 
     rightBusImageElement.setAttribute('src', Bus.rightObject.src);
     rightBusImageElement.setAttribute('alt', Bus.rightObject.title);
-    
+
     centerBusImageElement.setAttribute('src', Bus.centerObject.src);
     centerBusImageElement.setAttribute('alt', Bus.centerObject.title);
 
-    Bus.lefttitle.textContent = Bus.leftObject.title;
-    Bus.righttitle.textContent = Bus.rightObject.title;
-    Bus.centertitle.textContent = Bus.centerObject.title;
+    Bus.leftname.textContent = Bus.leftObject.title;
+    Bus.rightname.textContent = Bus.rightObject.title;
+    Bus.centername.textContent = Bus.centerObject.title;
 }
 
 function getRandomBus() {
-    var index = Math.floor(Math.random() *  Bus.all.length);
+    var index = Math.floor(Math.random() * Bus.all.length);
     return Bus.all[index];
 }
 
@@ -106,20 +107,7 @@ function randomInRange(min, max) {
     return rand;
 }
 
-function updateTotals() {
-
-    var tableBody = document.getElementById('report product');
-
-    tableBody.innerHTML = '';
-
-    for (var i = 0; i <  Bus.all.length ; i++) {
-        var pro = Bus.all[i];
-        var row = addElement('tr', tableBody);
-        addElement('td', row, pro.title);
-        addElement('td', row, '' + pro.clickCtr);
-        addElement('td', row, '' + pro.shownCtr);
-    }
-}
+   
 
 function addElement(tag, container, text) {
     var element = document.createElement(tag);
@@ -128,6 +116,16 @@ function addElement(tag, container, text) {
         element.textContent = text;
     }
     return element;
+}
+function renderview() {
+    var container = document.getElementById('report_product')
+    
+    for (let i = 0; i < Bus.all.length; i++) {
+        var LastProduct = Bus.all[i];
+        var Products = LastProduct.title + ' had ' + LastProduct.clickCtr + ' voted and had shown ' + LastProduct.shownCtr + ' times. ';
+        addElement('li', container, Products);
+
+    }
 }
 
 function clickHandler(event) {
@@ -149,10 +147,11 @@ function clickHandler(event) {
         busClicked.clickCtr++;
         Bus.roundCtr++;
 
-        updateTotals();
+
         if (Bus.roundCtr === Bus.roundLimit) {
 
             alert('sorry,No more clicking !');
+            renderview()
 
             Bus.container.removeEventListener('click', clickHandler);
 
@@ -162,9 +161,8 @@ function clickHandler(event) {
         }
     }
 }
+
 Bus.container.addEventListener('click', clickHandler);
 
-updateTotals();
 
 renderNewBus();
-
