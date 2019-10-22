@@ -151,8 +151,9 @@ function clickHandler(event) {
         if (Bus.roundCtr === Bus.roundLimit) {
 
             alert('sorry,No more clicking !');
-            renderview()
-
+            renderview();
+            renderChart();
+            
             Bus.container.removeEventListener('click', clickHandler);
 
         } else {
@@ -166,3 +167,92 @@ Bus.container.addEventListener('click', clickHandler);
 
 
 renderNewBus();
+function makeChart() {
+
+    var productsTitleArray = [];
+    var productLikesArray = [];
+
+    for (var i = 0; i < Bus.length; i++) {
+        var picName = Bus[i].title;
+        productsTitleArray.push(picName);
+    }
+
+    for (var i = 0; i < Bus.length; i++) {
+        var PicLikes = Bus.clicks;
+        productLikesArray.push(PicLikes);
+    }
+}
+
+function renderChart() {
+
+    // Modified from https://jsfiddle.net/nagix/bL8hpk6n/
+
+    var productsTitle= [];
+    var productsClick = [];
+    var productsShown = [];
+
+    for(var i = 0; i < Bus.all.length; i++) {
+        var NewProduct =Bus.all[i];
+        productsTitle.push(NewProduct.title);
+        productsClick.push(NewProduct.clickCtr);
+        productsShown.push(NewProduct.shownCtr);
+
+    }
+
+    var data = {
+        labels: productsTitle,
+        datasets: [{
+          label: "Clicked",
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderWidth: 1,
+          data: productsClick,
+          xAxisID: "bar-x-axis1",
+        }, {
+          label: "Shown",
+          backgroundColor: 'rgba(255, 206, 86, 0.2)',
+          borderWidth: 1,
+          data: productsShown,
+          xAxisID: "bar-x-axis2",
+        }]
+      };
+      
+      var options = {
+        scales: {
+          xAxes: [{
+            stacked: true,
+            id: "bar-x-axis1",
+            barThickness: 20,
+          }, {
+            display: false,
+            stacked: true,
+            id: "bar-x-axis2",
+            barThickness: 40,
+        
+            type: 'category',
+            categoryPercentage: 0.8,
+            barPercentage: 0.9,
+            gridLines: {
+              offsetGridLines: true
+            },
+            offset: true
+          }],
+          yAxes: [{
+            stacked: false,
+            ticks: {
+              beginAtZero: true
+            },
+          }]
+      
+        }
+      };
+      
+      var ctx = document.getElementById("Mychart").getContext("2d");
+      var myBarChart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: options
+      });
+
+
+
+}
