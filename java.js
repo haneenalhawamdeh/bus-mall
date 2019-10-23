@@ -155,7 +155,9 @@ function clickHandler(event) {
             renderChart();
             
             Bus.container.removeEventListener('click', clickHandler);
-
+            var itemString = JSON.stringify(Bus.all);
+            localStorage.setItem('items', itemString);
+      
         } else {
 
             renderNewBus();
@@ -166,7 +168,7 @@ function clickHandler(event) {
 Bus.container.addEventListener('click', clickHandler);
 
 
-renderNewBus();
+
 function makeChart() {
 
     var productsTitleArray = [];
@@ -256,3 +258,22 @@ function renderChart() {
 
 
 }
+function getStoredItems() {
+
+    var itemString = localStorage.getItem('items');
+  
+    if(itemString) {
+      
+      var newObjectArray = JSON.parse(itemString);
+  
+      for(var i=0; i < newObjectArray.length; i++) {
+        var newObject = newObjectArray[i];
+        var currentInstance = Bus.all[i];
+        currentInstance.clickCtr = newObject.clickCtr;
+        currentInstance.shownCtr = newObject.shownCtr;
+      }
+    }
+  }
+  
+  getStoredItems();
+  renderNewBus();
