@@ -1,5 +1,6 @@
 
 'use strict';
+
 function Bus(title, src) {
     this.title = title;
     this.src = src;
@@ -47,6 +48,7 @@ new Bus('usb', 'images/usb.gif');
 new Bus('water-can', 'images/water-can.jpg');
 new Bus('wine-glass', 'images/wine-glass.jpg');
 function renderNewBus() {
+  // we use this fun to make the random pic that will appear not the same of 3 previos one and not the same of the 2 beside 
 
     var forbidden = [Bus.leftObject, Bus.rightObject, Bus.centerObject];
 
@@ -95,7 +97,7 @@ function renderNewBus() {
     Bus.rightname.textContent = Bus.rightObject.title;
     Bus.centername.textContent = Bus.centerObject.title;
 }
-
+// fun to take arandom pic from the 20 
 function getRandomBus() {
     var index = Math.floor(Math.random() * Bus.all.length);
     return Bus.all[index];
@@ -117,6 +119,7 @@ function addElement(tag, container, text) {
     }
     return element;
 }
+//which will appear in screen after 25 check 
 function renderview() {
     var container = document.getElementById('report_product')
     
@@ -184,7 +187,7 @@ function makeChart() {
         productLikesArray.push(PicLikes);
     }
 }
-
+//chart that repessent the total shows and checked after checked stop 
 function renderChart() {
 
     // Modified from https://jsfiddle.net/nagix/bL8hpk6n/
